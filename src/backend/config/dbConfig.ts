@@ -2,14 +2,14 @@ import { registerAs } from "@nestjs/config";
 
 export default registerAs('database', () => ({
   service: 'database',
-  mongodb: {
-    auth: {
-      user: 'mguser',
-      pass: 'mgpass',
-    },
-    addr: 'mongo',
-    port: '27017',
-    name: 'filesharing'
+  mysql: {
+    type: 'mysql',
+    host: 'localhost',
+    port: 3306,
+    username: 'dbuser',
+    password: 'dbuser1234',
+    database: 'timetable',
+    synchronize: true,
   },
   redis: {
     addr: 'localhost',

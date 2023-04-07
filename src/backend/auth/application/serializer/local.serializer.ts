@@ -17,7 +17,7 @@ export class LocalSerializer extends PassportSerializer {
   async deserializeUser(userId: string, done: Function) {
     const user: User = await this.queryBus.execute(new FindUserQuery(userId));
     if (!user)
-        return done(new NotFoundException());
+        return done('Unexpected error in deserializing');
     return done(null, user);
   }
 }

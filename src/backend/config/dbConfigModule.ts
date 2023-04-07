@@ -7,9 +7,8 @@ import { ConfigType } from "@nestjs/config";
 export class DBConfigService {
   constructor(@Inject(dbConfig.KEY) public config: ConfigType<typeof dbConfig>) {}
 
-  makeMongoDBUri(): string {
-    const conf = this.config.mongodb;
-    return `mongodb://${conf.auth.user}:${conf.auth.pass}@${conf.addr}:${conf.port}/${conf.name}`
+  makeMySQLConfig(): {[key: string]: string | number | string[] | boolean} {
+    return this.config.mysql;
   }
 
 }
