@@ -10,14 +10,14 @@ import { UpdateUserCommand } from '../application/command/user-update.command';
 import { FindUserQuery } from '../application/query/user-find.query';
 import { User } from '../domain/user';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
     constructor(
         private commandBus: CommandBus,
         private queryBus: QueryBus
     ) { }
 
-    @Post('/:nUserId/create')
+    @Post('/:nUserId')
     async createUser(
         @Param('nUserId', UserExisted) userId: string,
         @Body() dto: CreateUserDto
@@ -27,8 +27,7 @@ export class UserController {
         this.commandBus.execute(command);
     }
 
-    @Delete('/:userId/delete')
-    @UseGuards(UserGuard)
+    @Delete('/:userId')
     async deleteUser(
         @Param('userId', UserExisted) userId: string
     ): Promise<void> {
@@ -36,8 +35,7 @@ export class UserController {
         this.commandBus.execute(command);
     }
     
-    @Put('/:userId/update')
-    @UseGuards(UserGuard)
+    @Put('/:userId')
     async updateUser(
         @Param('userId', UserExisted) userId: string,
         @Body() dto: UpdateUserDto
@@ -48,7 +46,6 @@ export class UserController {
     }
 
     @Get('/:userId')
-    @UseGuards(UserGuard)
     async findUser(
         @Param('userId', UserExisted) userId: string
     ): Promise<{[key: string]: string}> {

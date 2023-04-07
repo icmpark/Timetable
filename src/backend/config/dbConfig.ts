@@ -12,7 +12,7 @@ export default registerAs('database', () => ({
     name: 'filesharing'
   },
   redis: {
-    addr: 'redis',
+    addr: 'localhost',
     port: '6379',
     TTL: 60 * 60
   }

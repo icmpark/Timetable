@@ -1,8 +1,7 @@
 import { registerAs } from "@nestjs/config";
-export const SECRET_KEY = 'SECRETKEY';
 
 export default registerAs('auth', () => ({
-    secret_key: SECRET_KEY,
+    secret_key: 'SECRETKEY',
     refresh_expiresIn: '1d',
     expiresIn: '1h',
     audience: 'localhost:3000',

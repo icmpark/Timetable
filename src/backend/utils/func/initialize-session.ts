@@ -1,29 +1,16 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { useContainer } from 'class-validator';
-import * as cookieParser from 'cookie-parser';
+import { NestApplication } from "@nestjs/core";
 import { ConfigService } from '@nestjs/config';
 import * as passport from 'passport';
 import RedisStore from 'connect-redis';
 import * as session from 'express-session';
 import { Redis } from 'ioredis';
+import { INestApplication } from "@nestjs/common";
 
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  useContainer(app.select(AppModule), { fallbackOnErrors: true });
-
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,
-  }));
-
-  app.use(cookieParser());
-
+export function initialize_session(app: INestApplication): void {
   const configService = app.get<ConfigService>(ConfigService);
   const port = configService.get('database.redis.port');
   const host = configService.get('database.redis.addr');
-  
   const redisClient = new Redis({port:port, host:host});
   const redisStore = new RedisStore({client: redisClient});
 
@@ -42,8 +29,5 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-
-  // app.enableCors(); 
-  await app.listen(3000);
+  
 }
-bootstrap();
