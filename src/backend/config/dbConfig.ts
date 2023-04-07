@@ -9,7 +9,7 @@ export default registerAs('database', () => ({
     username: 'dbuser',
     password: 'dbuser1234',
     database: 'timetable',
-    synchronize: true,
+    synchronize: true
   },
   redis: {
     addr: 'localhost',
