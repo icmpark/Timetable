@@ -1,8 +1,8 @@
-import { IsString, Length, Matches } from "class-validator";
+import { IsString, Matches, MaxLength } from "class-validator";
 
 export class CreateUserDto {
     @IsString()
-    @Length(60)
+    @MaxLength(60)
     readonly userName: string;
 
     @IsString()
