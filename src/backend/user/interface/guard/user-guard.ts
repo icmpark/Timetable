@@ -1,19 +1,15 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { QueryBus } from '@nestjs/cqrs';
+import { User } from '../../domain/user';
 
 @Injectable()
 export class UserGuard implements CanActivate {
-    constructor(
-        private queryBus: QueryBus
-    ) { }
-
-    async canActivate(context: ExecutionContext): Promise<boolean> {
-        const request = context.switchToHttp().getRequest();
-        return true;
-    }
-
-    private validateRequest(request: any, verify_result: string): boolean {
-        const request_id: string = request.params.userId;
-        return request_id == verify_result;
-    };
+  async canActivate(context: ExecutionContext) {
+    const request = context.switchToHttp().getRequest();
+    if (!request.isAuthenticated())
+        return false;
+        
+    const user: User = request.user;
+    const userId: string = request.params.userId;
+    return userId == user.userId;
+  }
 }

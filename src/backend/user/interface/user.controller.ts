@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Get, UseGuards, Delete, Put } from '@nestjs/common';
+import { Body, Controller, Param, Post, Get, UseGuards, Delete, Put, Req } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserExisted } from './pipe/user-existed.pipe';
@@ -27,14 +27,18 @@ export class UserController {
         this.commandBus.execute(command);
     }
 
+    @UseGuards(UserGuard)
     @Delete('/:userId')
     async deleteUser(
-        @Param('userId', UserExisted) userId: string
+        @Param('userId', UserExisted) userId: string,
+        @Req() req
     ): Promise<void> {
         const command = new DeleteUserCommand(userId);
         this.commandBus.execute(command);
+        req.logout(() => null);
     }
-    
+
+    @UseGuards(UserGuard)
     @Put('/:userId')
     async updateUser(
         @Param('userId', UserExisted) userId: string,
@@ -45,6 +49,7 @@ export class UserController {
         this.commandBus.execute(command);
     }
 
+    @UseGuards(UserGuard)
     @Get('/:userId')
     async findUser(
         @Param('userId', UserExisted) userId: string
