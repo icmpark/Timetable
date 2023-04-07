@@ -10,6 +10,10 @@ import { UserCreatedEventHandler } from './application/event/user-create.handler
 import { UserDeletedEventHandler } from './application/event/user-delete.handler';
 import { UserUpdatedEventHandler } from './application/event/user-update.handler';
 import { UserRepository } from './infra/db/repository/user.repository';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from './infra/db/entity/user.entity';
+
+
 
 const commandHandlers = [
   CreateUserCommandHandler,
@@ -37,6 +41,7 @@ const repositories = [
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([UserEntity]),
     CqrsModule
   ],
   controllers: [UserController],

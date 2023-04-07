@@ -5,9 +5,11 @@ import dbConfig from './config/dbConfig';
 import authConfig from './config/authConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DBConfigModule, DBConfigService} from './config/dbConfigModule';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     UserModule,
     ConfigModule.forRoot({
       // envFilePath: [`${__dirname}/config/env/.${process.env.NODE_ENV}.env`],
@@ -17,7 +19,7 @@ import { DBConfigModule, DBConfigService} from './config/dbConfigModule';
     TypeOrmModule.forRootAsync({
       imports: [DBConfigModule],
       inject: [DBConfigService],
-      useFactory: (conf: DBConfigService) => conf.makeMySQLConfig()
+      useFactory: (conf: DBConfigService) => conf.makeMySQLConfig(),
     })
   ]
 })
