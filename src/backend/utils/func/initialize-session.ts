@@ -22,8 +22,8 @@ export function initialize_session(app: INestApplication): void {
       store: redisStore,
       cookie: {
         httpOnly: true,
-        secure: true,
-        maxAge: 30000,  //세션이 redis에 저장되는 기간은 maxAge로 조절한다.(ms)
+        // secure: true,
+        maxAge: 360000,  //세션이 redis에 저장되는 기간은 maxAge로 조절한다.(ms)
       },
     }),
   );

@@ -5,6 +5,7 @@ import { LocalSerializer } from './application/serializer/local.serializer';
 import { UserModule } from '../user/user.module';
 import { VerifyAuthQueryHandler } from './application/query/verify-auth.handler';
 import { CqrsModule } from '@nestjs/cqrs';
+import { AuthController } from './interface/auth.controller';
 
 const queryHandlers = [
     VerifyAuthQueryHandler
@@ -12,7 +13,7 @@ const queryHandlers = [
 
 @Module({
   imports: [
-    PassportModule.register({ session: true }),
+    PassportModule.register({session: true}),
     UserModule, 
     CqrsModule
   ],
@@ -20,6 +21,7 @@ const queryHandlers = [
     LocalStrategy,
     LocalSerializer,
     ...queryHandlers
-  ]
+  ],
+  controllers: [ AuthController ]
 })
 export class AuthModule {}

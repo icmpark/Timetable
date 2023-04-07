@@ -12,8 +12,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
   }));
-  initialize_session(app);
   app.use(cookieParser());
+  initialize_session(app);
 
   // app.enableCors(); 
   await app.listen(3000);
