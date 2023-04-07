@@ -46,10 +46,10 @@ export class ScheduleRepository implements IScheduleRepository {
                 schedule.description = description;
 
             if (addUser != undefined)
-                schedule.assignedUser.push({userId: addUser} as UserEntity);
+                (await schedule.assignedUser).push({userId: addUser} as UserEntity);
 
             if (deleteUser != undefined)
-                schedule.assignedUser = schedule.assignedUser.filter((value: UserEntity) => value.userId != deleteUser);
+                schedule.assignedUser = Promise.resolve((await schedule.assignedUser).filter((value: UserEntity) => value.userId != deleteUser));
 
             await manager.save(schedule);
         });
