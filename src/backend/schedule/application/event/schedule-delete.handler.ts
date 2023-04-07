@@ -7,14 +7,14 @@ import { IScheduleRepository } from '../../domain/repository/ischedule.repositor
 @EventsHandler(ScheduleDeletedEvent)
 export class ScheduleDeletedEventHandler implements IEventHandler<ScheduleDeletedEvent> {
     constructor(
-        @Inject('scheduleRepository') private ScheduleRepository: IScheduleRepository,
+        @Inject('ScheduleRepository') private scheduleRepository: IScheduleRepository,
     ) { }
 
     async handle(event: ScheduleDeletedEvent) {
         switch (event.name) {
             case ScheduleDeletedEvent.name: {
                 const { id } = event as ScheduleDeletedEvent;
-                await this.ScheduleRepository.delete(id);
+                await this.scheduleRepository.delete(id);
                 break;
             }
             default:

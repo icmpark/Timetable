@@ -6,11 +6,13 @@ import authConfig from './config/authConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DBConfigModule, DBConfigService} from './config/dbConfigModule';
 import { AuthModule } from './auth/auth.module';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
     AuthModule,
     UserModule,
+    ScheduleModule,
     ConfigModule.forRoot({
       // envFilePath: [`${__dirname}/config/env/.${process.env.NODE_ENV}.env`],
       load: [dbConfig, authConfig],

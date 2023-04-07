@@ -87,7 +87,7 @@ export class ScheduleController {
     }
 
     @Roles('userself', 'owner')
-    @Delete('/:scheduleId/user/:nUserId')
+    @Post('/:scheduleId/user/:nUserId')
     async assignSchedule(
         @Param('scheduleId', ScheduleExisted) scheduleId: string,
         @ParamPair(['scheduleId', 'nUserId'], UserAssigned) userId: string
@@ -122,8 +122,7 @@ export class ScheduleController {
             title: schedule.title,
             description: schedule.description,
             startTime: schedule.startTime,
-            endTime: schedule.endTime,
-            subscription: schedule.subscription
+            endTime: schedule.endTime
         };
     }
 }

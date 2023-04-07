@@ -24,8 +24,7 @@ export class ScheduleFactory {
             title,
             description,
             startTime,
-            endTime,
-            []
+            endTime
         );
         this.eventBus.publish(new ScheduleCreatedEvent(schedule));
         return schedule;
@@ -48,5 +47,24 @@ export class ScheduleFactory {
         this.eventBus.publish(new ScheduleDeletedEvent(id));
     }
     
+    reconstitute (
+        id: string,
+        createdBy: string,
+        title: string,
+        description: string,
+        startTime: Date,
+        endTime: Date
+    ): Schedule {
+        const schedule = new Schedule(
+            id,
+            createdBy,
+            title,
+            description,
+            startTime,
+            endTime
+        );
+        return schedule;
+    }
+
 
 }

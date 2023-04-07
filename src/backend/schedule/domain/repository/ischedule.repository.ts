@@ -2,7 +2,7 @@
 import { Schedule } from "../schedule";
 
 export interface IScheduleRepository {
-    create: (Schedule: Schedule) => Promise<void>;
+    create: (schedule: Schedule) => Promise<void>;
     update: (id: string, title?: string, description?: string, addUser?: string, deleteUser?: string) => Promise<void>;
     delete: (id: string) => Promise<void>;
     isAssigned: (id: string, userId: string) => Promise<boolean>;
