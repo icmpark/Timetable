@@ -5,6 +5,7 @@ export class Schedule {
         readonly title: string,
         readonly description: string,
         readonly startTime: Date,
-        readonly endTime: Date
+        readonly endTime: Date,
+        readonly subscriptions: string[]
     ) { }
 }

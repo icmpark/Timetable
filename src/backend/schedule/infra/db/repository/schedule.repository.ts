@@ -75,11 +75,13 @@ export class ScheduleRepository implements IScheduleRepository {
         });
     }
     async findOne(id: string): Promise<Schedule | null> {
-        const scheduleEntity: ScheduleEntity | null = await this.scheduleRepostory.findOneBy({id: id});
+        const scheduleEntity: ScheduleEntity | null = await this.scheduleRepostory.findOne(
+            {relations: ['assignedUser'], where: {id: id}}
+        );
 
         if (scheduleEntity == null)
             return null;
-
+        console.log(scheduleEntity);
         return this.scheduleFactory.reconstitute(
             scheduleEntity.id,
             scheduleEntity.createdBy,

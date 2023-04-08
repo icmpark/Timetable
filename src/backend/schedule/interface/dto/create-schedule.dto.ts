@@ -15,7 +15,6 @@ export class CreateScheduleDto {
     @IsNotEmpty()
     @Transform( ({ value }) => new Date(value))
     @IsDate()
-    @MinDate(new Date())
     readonly startDate: Date;
 
     @IsNotEmpty()

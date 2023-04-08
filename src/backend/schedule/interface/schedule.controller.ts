@@ -9,12 +9,13 @@ import { UpdateScheduleCommand } from '../application/command/update-schedule.co
 import { FindAllScheduleQuery, FindScheduleCreatedByUserQuery, FindScheduleQuery, FindScheduleUserAssignedQuery } from '../application/query/find-schedule.query';
 import { Schedule } from '../domain/schedule';
 import { isScheduleAssignableQuery } from '../application/query/exist-schedule.query';
-import { Roles } from './guard/schedule.guard';
+import { Roles, ScheduleGuard } from './guard/schedule.guard';
 import { ScheduleExisted } from './pipe/schedule-exist.pipe';
 import { ParamPair } from './deco/param-pair.deco';
 import { UserAssigned } from './pipe/user-assigned.pipe';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 
+@UseGuards(ScheduleGuard)
 @Controller('schedules')
 export class ScheduleController {
     constructor(
@@ -23,6 +24,7 @@ export class ScheduleController {
     ) { }
     
     private scheduleConvert = (schedule: Schedule): {[key: string]: any} => Object({
+        id: schedule.id,
         title: schedule.title,
         description: schedule.description,
         startTime: schedule.startTime,
@@ -122,7 +124,8 @@ export class ScheduleController {
             title: schedule.title,
             description: schedule.description,
             startTime: schedule.startTime,
-            endTime: schedule.endTime
+            endTime: schedule.endTime,
+            subscriptions: schedule.subscriptions
         };
     }
 }

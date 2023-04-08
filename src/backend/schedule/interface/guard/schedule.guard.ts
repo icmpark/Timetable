@@ -9,7 +9,7 @@ import { FindScheduleQuery } from '../../application/query/find-schedule.query';
 export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 
 @Injectable()
-export class GroupGuard implements CanActivate {
+export class ScheduleGuard implements CanActivate {
     constructor (
         private queryBus: QueryBus,
         private reflector: Reflector

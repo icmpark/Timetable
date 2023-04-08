@@ -24,7 +24,8 @@ export class ScheduleFactory {
             title,
             description,
             startTime,
-            endTime
+            endTime,
+            []
         );
         this.eventBus.publish(new ScheduleCreatedEvent(schedule));
         return schedule;
@@ -53,7 +54,8 @@ export class ScheduleFactory {
         title: string,
         description: string,
         startTime: Date,
-        endTime: Date
+        endTime: Date,
+        subscriptions: string[] = []
     ): Schedule {
         const schedule = new Schedule(
             id,
@@ -61,7 +63,8 @@ export class ScheduleFactory {
             title,
             description,
             startTime,
-            endTime
+            endTime,
+            subscriptions
         );
         return schedule;
     }
