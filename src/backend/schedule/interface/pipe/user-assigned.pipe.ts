@@ -12,10 +12,10 @@ export class UserAssigned implements PipeTransform<any> {
 
         const userAssigned: boolean = await this.queryBus.execute(new isUserAssignedScheduleQuery(scheduleId, userId));
 
-        if (user_metadata == 'nUserId' && !userAssigned)
+        if (user_metadata == 'nUserId' && userAssigned)
             throw new BadRequestException({messages: 'User is assigned in schedule'});
 
-        if (user_metadata == 'userId' && userAssigned)
+        if (user_metadata == 'userId' && !userAssigned)
             throw new BadRequestException({messages: 'User is not assigned in schedule'});
 
         return userId;

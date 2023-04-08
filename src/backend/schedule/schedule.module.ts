@@ -9,8 +9,7 @@ import { ScheduleUpdatedEventHandler } from './application/event/schedule-update
 import { CreateScheduleCommandHandler } from './application/command/create-schedule.handler';
 import { UpdateScheduleCommandHandler } from './application/command/update-schedule.handler';
 import { DeleteScheduleCommandHandler } from './application/command/delete-schedule.handler';
-import { isUserAssignedScheduleQueryHandler } from './application/query/exist-schedule.handler';
-import { isScheduleAssignableQuery } from './application/query/exist-schedule.query';
+import { isUserAssignedScheduleQueryHandler, isScheduleAssignableQueryHandler } from './application/query/exist-schedule.handler';
 import { FindAllScheduleQueryHandler, FindScheduleCreatedByUserQueryHandler, FindScheduleQueryHandler, FindScheduleUserAssignedQueryHandler } from './application/query/find-schedule.handler';
 import { ScheduleEntity } from './infra/db/entity/schedule.entity';
 import { ScheduleController } from './interface/schedule.controller';
@@ -24,7 +23,7 @@ const commandHandlers = [
 
 const queryHandlers = [
   isUserAssignedScheduleQueryHandler,
-  isScheduleAssignableQuery,
+  isScheduleAssignableQueryHandler,
   FindAllScheduleQueryHandler,
   FindScheduleQueryHandler,
   FindScheduleUserAssignedQueryHandler,

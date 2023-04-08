@@ -55,7 +55,7 @@ export class ScheduleFactory {
         description: string,
         startTime: Date,
         endTime: Date,
-        subscriptions: string[] = []
+        assignedUser: string[] = []
     ): Schedule {
         const schedule = new Schedule(
             id,
@@ -64,7 +64,7 @@ export class ScheduleFactory {
             description,
             startTime,
             endTime,
-            subscriptions
+            assignedUser
         );
         return schedule;
     }

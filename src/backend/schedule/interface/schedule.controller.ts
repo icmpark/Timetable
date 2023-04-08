@@ -55,7 +55,7 @@ export class ScheduleController {
 
 
     @Roles('auth')
-    @Post('/create')
+    @Post('/')
     async createSchedule(
         @Auth('userId') userId: string,
         @Body() dto: CreateScheduleDto
@@ -119,13 +119,13 @@ export class ScheduleController {
     ): Promise<{[key: string]: any}> {
         const query = new FindScheduleQuery(scheduleId);
         const schedule: Schedule = await this.queryBus.execute(query);
-
+        
         return {
             title: schedule.title,
             description: schedule.description,
             startTime: schedule.startTime,
             endTime: schedule.endTime,
-            subscriptions: schedule.subscriptions
+            assignedUser: schedule.assignedUser
         };
     }
 }

@@ -6,6 +6,6 @@ export class Schedule {
         readonly description: string,
         readonly startTime: Date,
         readonly endTime: Date,
-        readonly subscriptions: string[]
+        readonly assignedUser: string[]
     ) { }
 }

@@ -23,14 +23,14 @@ export class ScheduleEntity extends BaseEntity  {
 
     @ManyToOne(
         () => UserEntity,
-        { nullable: false, cascade: true}
+        { nullable: false, cascade: true, lazy: true}
     )
     @JoinColumn({ name: 'createdBy'})
     createdUser: Promise<UserEntity>;
     
     @ManyToMany(
         (type) => UserEntity,
-        { cascade: true }
+        { cascade: true, lazy: true }
     )
     @JoinTable()
     assignedUser: Promise<UserEntity[]>;

@@ -30,7 +30,7 @@ export class ScheduleGuard implements CanActivate {
         const roles = this.reflector.get<string[]>('roles', handler);
         const scheduleId = request.params.scheduleId;
         let schedule: Schedule = null;
-        const userId = request.body.nUserId ?? request.body.userId;
+        const userId = request.params.nUserId ?? request.params.userId;
 
         if (scheduleId)
             schedule = await this.queryBus.execute(new FindScheduleQuery(scheduleId))

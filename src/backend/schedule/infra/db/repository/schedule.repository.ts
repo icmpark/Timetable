@@ -60,35 +60,48 @@ export class ScheduleRepository implements IScheduleRepository {
         await this.scheduleRepostory.delete({id: id});
     }
 
-    async isAssigned(id: string, userId: string): Promise<boolean> {        
-        return await this.scheduleRepostory.exist({where: {id: id, createdBy: userId}});
+    async isAssigned(id: string, userId: string): Promise<boolean> {
+        return await this.scheduleRepostory.exist({
+            relations: ['assignedUser'],
+            where: {id: id, assignedUser: {userId: userId}}
+        });
     }
 
     async isAssignable(id: string, userId: string): Promise<boolean> {
         const schedule = await this.findOne(id);
 
         return !await this.scheduleRepostory.exist({
+            relations: ['assignedUser'],
             where: [
-                { startTime: LessThanOrEqual(schedule.endTime), endTime: MoreThanOrEqual(schedule.startTime), createdBy:userId },
-                { id: id, createdBy:userId }  
+                { 
+                    startTime: LessThanOrEqual(schedule.endTime), 
+                    endTime: MoreThanOrEqual(schedule.startTime), 
+                    assignedUser: { userId: userId } 
+                },
+                { id: id, assignedUser: { userId: userId } }  
             ]
         });
     }
     async findOne(id: string): Promise<Schedule | null> {
         const scheduleEntity: ScheduleEntity | null = await this.scheduleRepostory.findOne(
-            {relations: ['assignedUser'], where: {id: id}}
+            {
+                relations: ['assignedUser'],
+                where: {id: id},
+                select: {assignedUser: {userId: true} }
+            }
         );
-
+        
         if (scheduleEntity == null)
             return null;
-        console.log(scheduleEntity);
+
         return this.scheduleFactory.reconstitute(
             scheduleEntity.id,
             scheduleEntity.createdBy,
             scheduleEntity.title,
             scheduleEntity.description,
             scheduleEntity.startTime,
-            scheduleEntity.endTime
+            scheduleEntity.endTime,
+            (await scheduleEntity.assignedUser).map((user: UserEntity) => user.userId)
         );
     }
     private convertEntityToObject = (scheduleEntity: ScheduleEntity): Schedule => this.scheduleFactory.reconstitute(
@@ -112,10 +125,7 @@ export class ScheduleRepository implements IScheduleRepository {
     async findUserAssigned(userId: string): Promise<Schedule[]> {
         const scheduleEntities: ScheduleEntity[] = await this.scheduleRepostory.find({
             relations: [ 'assignedUser' ],
-            where: { 'assignedUser': {
-                    userId: userId
-                } 
-            }
+            where: { 'assignedUser': { userId: userId } }
         })
         return scheduleEntities.map(this.convertEntityToObject);
     }
