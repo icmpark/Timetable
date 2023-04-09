@@ -147,6 +147,23 @@
     </div>
   </main>
 
+  <div class="modal fade" id="loginFailedModal" tabindex="-1" aria-labelledby="loginFailedModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="loginFailedModalLabel">알림</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            로그인이 실패했습니다. 아이디와 패스워드를 확인하십시오.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <h6>안녕하세요, {{ userName }}. </h6>
   </footer>
