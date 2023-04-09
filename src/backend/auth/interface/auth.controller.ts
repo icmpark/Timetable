@@ -3,6 +3,7 @@ import { Controller, Post, UseGuards, Get, Res, Req, HttpCode } from '@nestjs/co
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { AuthenticatedGuard } from './guard/check-auth.guard';
 
+
 @Controller('auth')
 export class AuthController {
 
@@ -18,4 +19,16 @@ export class AuthController {
   async logout(@Req() req) {
     req.logout(() => null);
   }
+  
+  @UseGuards(AuthenticatedGuard)
+  @Get('/current')
+  async currentUser(
+    @Req() req   
+  ): Promise<{[key: string]: string}> {
+      return {
+          userId: req.user.userId,
+          userName: req.user.userName
+      };
+  }
+  
 }

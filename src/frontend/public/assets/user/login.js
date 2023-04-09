@@ -22,7 +22,7 @@ Vue.createApp({
                 if(res.status != 200)
                     this.modal.show();
                 else
-                    location.href='/login';
+                    location.href='/';
             });
 
         }
