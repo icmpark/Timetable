@@ -21,8 +21,6 @@ Vue.createApp({
         
         this.formUserName = this.userName = jsonResult.userName;
         this.userId = jsonResult.userId;
-
-        console.log(jsonResult);
     }, 
     methods: {
         navbarHighlight(value) {

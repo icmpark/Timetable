@@ -1,9 +1,22 @@
 Vue.createApp({
     data() {
         return {
+            userId: null,
+            userName: null
         }
     },
-    mounted () {
+    async mounted () {
+        const result = await fetch(`/v/auth/current`, {
+            method: "GET"
+        })
+
+        if(result.status != 200)
+            location.href='/login';
+        
+        const jsonResult = await result.json();
+        
+        this.userName = jsonResult.userName;
+        this.userId = jsonResult.userId;
     }, 
     methods: {
         navbarHighlight(value) {
