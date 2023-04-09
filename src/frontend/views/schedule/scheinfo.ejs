@@ -1,0 +1,157 @@
+<%- include ('../general/header') %>
+
+<div id="myApp" class="container py-3">
+  <%- include ('navbar') -%>
+  <link rel="stylesheet" href="/assets/schedule/scheinfo.css">
+  
+  <main>
+    <div class="row justify-content-md-center">
+      <div class="col-md-5 mb-3">
+        <div id="creadiv">
+          <form id="creaform" @submit.prevent="infoUpdate">
+            <h5 class="mb-3">스케줄 추가</h6>
+              <div class="mb-3">
+                <label for="scheduleTitle" class="form-label">이름</label>
+                <input type="text" class="form-control" id="scheduleTitle" required>
+              </div>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="scheduleTitle" class="form-label">시작</label>
+                <input type="time" class="form-control" id="scheduleTitle" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="scheduleTitle" class="form-label">끝</label>
+                <input type="time" class="form-control" id="scheduleTitle" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="scheduleTitle" class="form-label">요일</label>
+                <select class="form-select">
+                  <option value="Mon" selected>월요일</option>
+                  <option value="Tue">화요일</option>
+                  <option value="Wed">수요일</option>
+                  <option value="Thu">목요일</option>
+                  <option value="Fri">금요일</option>
+                  <option value="Sat">토요일</option>
+                  <option value="Sun">일요일</option>
+                </select>
+              </div>     
+            </div>
+            
+            <div class="mb-3">
+              <label for="userNameForm" class="form-label">내용</label>
+              <textarea rows="4" @input="isChanged" type="text" class="form-control" id="userNameForm" aria-describedby="userNameHelp" required></textarea>
+            </div>
+          <div id="passwordHelp" class="form-text">입력하면 비밀번호가 변경됩니다.</div>
+          <div class="mb-2 d-flex">
+            <button type="submit" id="submitbtn" class="btn btn-primary">수정</button>
+          </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-7 mb-3">
+        <div id="creadiv">
+          <div id="creaform">
+            <h5 class="mb-3">스케줄 목록</h6>
+              <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" id="scrollposition">
+                <div class="list-group list-group-flush border-bottom scrollarea">
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small>Wed</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Tues</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Mon</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+            
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Wed</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Tues</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Mon</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Wed</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Tues</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Mon</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Wed</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Tues</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action py-3 lh-sm">
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                      <strong class="mb-1">List group item heading</strong>
+                      <small class="text-body-secondary">Mon</small>
+                    </div>
+                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
+                  </a>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <h6>안녕하세요, {{ userName }}. </h6>
+  </footer>
+</div>
+
+<%- include ('../general/script') %>
+<script src="/assets/schedule/userinfo.js"></script>
+<%- include ('../general/footer') %>

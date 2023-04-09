@@ -4,7 +4,7 @@
   <%- include ('navbar') -%>
   <link rel="stylesheet" href="/assets/schedule/userinfo.css">
   <main>
-    <div id="editdiv">
+    <div id="editdiv" class="mb-4">
       <form id="editform" @submit.prevent="infoUpdate">
         <div class="mb-3">
           <label for="userNameForm" class="form-label">유저 이름</label>
@@ -24,7 +24,7 @@
           <button type="submit" id="submitbtn" class="btn btn-primary" :disabled="canSubmit != true">수정</button>
         </div>
       </form>
-      </div>
+    </div>
   </main>
 
   <footer class="pt-4 my-md-5 pt-md-5 border-top">

@@ -6,9 +6,12 @@ Vue.createApp({
         }
     },
     async mounted () {
-        const result = await fetch(`/v/auth/current`, {
-            method: "GET"
-        })
+        const result = await fetch(
+            `/v/auth/current`, 
+            {
+                method: "GET"
+            }
+        )
 
         if(result.status != 200)
             location.href='/login';

@@ -10,8 +10,13 @@ export class ScheduleRenderController {
   login() {
   }
 
-  @Get('userinfo')
+  @Get('/user-manage')
   @Render('schedule/userinfo')
   userinfo() {
+  }
+
+  @Get('/schedule-manage')
+  @Render('schedule/scheinfo')
+  scheduleinfo() {
   }
 }
