@@ -7,12 +7,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DBConfigModule, DBConfigService} from './config/dbConfigModule';
 import { AuthModule } from './auth/auth.module';
 import { ScheduleModule } from './schedule/schedule.module';
+import { RouterModule } from '@nestjs/core'
+
+const controllerModules = [
+  AuthModule,
+  UserModule,
+  ScheduleModule
+];
 
 @Module({
   imports: [
-    AuthModule,
-    UserModule,
-    ScheduleModule,
+    ...controllerModules,
+    RouterModule.register(
+      controllerModules.map(
+        (module) => ({
+          path: '/v',
+          module: module
+        })
+      )
+    ),
     ConfigModule.forRoot({
       // envFilePath: [`${__dirname}/config/env/.${process.env.NODE_ENV}.env`],
       load: [dbConfig, authConfig],
