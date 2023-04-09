@@ -16,10 +16,10 @@ export class ScheduleEntity extends BaseEntity  {
     createdBy: string;
 
     @Column('datetime')
-    startTime: Date;
+    startDate: Date;
 
     @Column('datetime')
-    endTime: Date;
+    endDate: Date;
 
     @ManyToOne(
         () => UserEntity,

@@ -11,7 +11,7 @@ export class CreateScheduleCommandHandler implements ICommandHandler<CreateSched
     ) { }
 
     async execute(command: CreateScheduleCommand): Promise<void> {
-        const { id, createdBy, title, description, startTime, endTime } = command;
-        this.scheduleFactory.create(id, createdBy, title, description, startTime, endTime);
+        const { id, createdBy, title, description, startDate, endDate } = command;
+        this.scheduleFactory.create(id, createdBy, title, description, startDate, endDate);
     }
 }

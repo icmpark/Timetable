@@ -21,7 +21,7 @@ export class ScheduleRepository implements IScheduleRepository {
 
 
     async create(schedule: Schedule): Promise<void> {
-        const { id, createdBy, title, description, startTime, endTime } = schedule;
+        const { id, createdBy, title, description, startDate, endDate } = schedule;
 
         await this.dataSource.transaction<void>(async manager => {
             const scheduleEntity = new ScheduleEntity();
@@ -29,8 +29,8 @@ export class ScheduleRepository implements IScheduleRepository {
             scheduleEntity.createdBy = createdBy;
             scheduleEntity.title = title;
             scheduleEntity.description = description;
-            scheduleEntity.startTime = startTime;
-            scheduleEntity.endTime = endTime;
+            scheduleEntity.startDate = startDate;
+            scheduleEntity.endDate = endDate;
             await manager.save(scheduleEntity);
         });
 
@@ -74,8 +74,8 @@ export class ScheduleRepository implements IScheduleRepository {
             relations: ['assignedUser'],
             where: [
                 { 
-                    startTime: LessThanOrEqual(schedule.endTime), 
-                    endTime: MoreThanOrEqual(schedule.startTime), 
+                    startDate: LessThanOrEqual(schedule.endDate), 
+                    endDate: MoreThanOrEqual(schedule.startDate), 
                     assignedUser: { userId: userId } 
                 },
                 { id: id, assignedUser: { userId: userId } }  
@@ -99,8 +99,8 @@ export class ScheduleRepository implements IScheduleRepository {
             scheduleEntity.createdBy,
             scheduleEntity.title,
             scheduleEntity.description,
-            scheduleEntity.startTime,
-            scheduleEntity.endTime,
+            scheduleEntity.startDate,
+            scheduleEntity.endDate,
             (await scheduleEntity.assignedUser).map((user: UserEntity) => user.userId)
         );
     }
@@ -109,8 +109,8 @@ export class ScheduleRepository implements IScheduleRepository {
         scheduleEntity.createdBy,
         scheduleEntity.title,
         scheduleEntity.description,
-        scheduleEntity.startTime,
-        scheduleEntity.endTime
+        scheduleEntity.startDate,
+        scheduleEntity.endDate
     );
 
     async findAll(): Promise<Schedule[]> {

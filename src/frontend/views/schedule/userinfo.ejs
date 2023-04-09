@@ -14,7 +14,7 @@
         <div class="mb-3">
           <label for="passwordHelp" class="form-label">비밀번호</label>
           <input @input="isChanged" v-model="formPassword" type="password" class="form-control" id="passwordHelp" aria-describedby="passwordHelp">
-          <div id="passwordHelp" class="form-text">입력하면 비밀번호가 변경됩니다.</div>
+          <div id="passwordHelp" class="form-text">8자 이상 입력하면 비밀번호가 변경됩니다.</div>
         </div>
         <div class="mb-3 form-check">
           <input @change="isChanged" v-model="formDeleted" type="checkbox" class="form-check-input" id="userDelCheckBox">

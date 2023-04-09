@@ -43,7 +43,7 @@ Vue.createApp({
             if (this.formUserName != this.userName)
                 this.canSubmit = true
             
-            if (this.formPassword != '')
+            if (7 < this.formPassword.length)
                 this.canSubmit = true;
         },
         async infoUpdate() {
@@ -61,7 +61,7 @@ Vue.createApp({
             if (this.formUserName != this.userName)
                 body.userName = this.formUserName;
             
-            if (this.formPassword)
+            if (7 < this.formPassword.length)
                 body.password = this.formPassword;
             
                 

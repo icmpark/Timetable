@@ -15,16 +15,16 @@ export class ScheduleFactory {
         createdBy: string,
         title: string,
         description: string,
-        startTime: Date,
-        endTime: Date
+        startDate: Date,
+        endDate: Date
     ): Schedule {
         const schedule = new Schedule(
             id,
             createdBy,
             title,
             description,
-            startTime,
-            endTime,
+            startDate,
+            endDate,
             []
         );
         this.eventBus.publish(new ScheduleCreatedEvent(schedule));
@@ -53,8 +53,8 @@ export class ScheduleFactory {
         createdBy: string,
         title: string,
         description: string,
-        startTime: Date,
-        endTime: Date,
+        startDate: Date,
+        endDate: Date,
         assignedUser: string[] = []
     ): Schedule {
         const schedule = new Schedule(
@@ -62,8 +62,8 @@ export class ScheduleFactory {
             createdBy,
             title,
             description,
-            startTime,
-            endTime,
+            startDate,
+            endDate,
             assignedUser
         );
         return schedule;

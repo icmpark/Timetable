@@ -27,8 +27,8 @@ export class ScheduleController {
         id: schedule.id,
         title: schedule.title,
         description: schedule.description,
-        startTime: schedule.startTime,
-        endTime: schedule.endTime,
+        startDate: schedule.startDate,
+        endDate: schedule.endDate,
     })
 
     @Roles('auth')
@@ -123,8 +123,8 @@ export class ScheduleController {
         return {
             title: schedule.title,
             description: schedule.description,
-            startTime: schedule.startTime,
-            endTime: schedule.endTime,
+            startDate: schedule.startDate,
+            endDate: schedule.endDate,
             assignedUser: schedule.assignedUser
         };
     }

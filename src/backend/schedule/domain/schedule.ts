@@ -4,8 +4,8 @@ export class Schedule {
         readonly createdBy: string,
         readonly title: string,
         readonly description: string,
-        readonly startTime: Date,
-        readonly endTime: Date,
+        readonly startDate: Date,
+        readonly endDate: Date,
         readonly assignedUser: string[]
     ) { }
 }
