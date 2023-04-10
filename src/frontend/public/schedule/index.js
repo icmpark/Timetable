@@ -23,19 +23,19 @@ Vue.createApp({
             tdTarget: null,
             assignSchedules: null,
             cacheSchedules: [],
-            hoverSchedule: null
+            modal: null,
         }
     },
     async mounted () {
         this.loadUserInfo();
         this.loadSchedules();
         this.loadAssignSchedules();
-
+        this.modal = new bootstrap.Modal(document.getElementById('addScheduleFailedModal'), {backdrop: true});
         this.$nextTick(() => {
             window.addEventListener('resize', this.onResize);
         })
 
-        this.tdTarget = document.getElementsByClassName('tableCell')[8];
+        this.tdTarget = document.getElementsByClassName('tableCell');
     }, 
     beforeDestroy() { 
         window.removeEventListener('resize', this.onResize); 
@@ -78,6 +78,9 @@ Vue.createApp({
                 this.cacheSchedules.push(this.getScheduleInfo(this.showSchedules[index]));
                 this.assignSchedules.push(this.showSchedules[index]);
             }
+            else {
+                this.modal.show();
+            }
         },
         async delSchedule(index) {
             const scheduleId = this.assignSchedules[index].id;
@@ -97,20 +100,28 @@ Vue.createApp({
             this.cacheSchedules = this.assignSchedules.map((schedule) => this.getScheduleInfo(schedule));
         },
         getHoverStyles(schedule, i) {
-            const rect = this.tdTarget.getBoundingClientRect();
             const [scheId, startDate, endDate, dow] = this.cacheSchedules[i];
+            const rect = this.tdTarget[dow].getBoundingClientRect();
             const height = rect.height * ((endDate - startDate) / 60);
-            const left = rect.x + window.scrollX + rect.width + ((rect.width + 2) * (dow-1));
+            const left = rect.x + window.scrollX ;
             const top = rect.y + window.scrollY + rect.height * (startDate / 60);
             
             return {
                 'left': left + 'px',
                 'top': top + 'px',
-                'width': rect.width + 2 + 'px',
+                'width': rect.width + 'px',
                 'height': height + 'px',
-                'z-index': (schedule.id == this.hoverSchedule) ? 5 : 6,
+                'z-index': (schedule.id != this.assignSchedules[this.assignSchedules.length-1].id) ? 5 : 6,
                 'background-color': colormap[i % colormap.length]
             };
+        },
+        scheduleMouseOver(index) {
+            this.cacheSchedules.push(this.getScheduleInfo(this.showSchedules[index]));
+            this.assignSchedules.push(this.showSchedules[index]);
+        },
+        scheduleMouseLeave(index) {
+            this.cacheSchedules.pop();
+            this.assignSchedules.pop();
         },
         getTableValue(row, col) {
             if (row == 1)
@@ -119,9 +130,9 @@ Vue.createApp({
             if (col == 1)
             {
                 if (row < 5)
-                    return `${String(row + 6).padStart(2, '0')} AM`;
+                    return `AM ${String(row + 6).padStart(2, '0')}`;
                 else
-                    return `${String((row == 5) ? (row + 7) : (row - 5)).padStart(2, '0')} PM`;
+                    return `PM ${String((row == 5) ? (row + 7) : (row - 5)).padStart(2, '0')}`;
             }
                 
             return '';

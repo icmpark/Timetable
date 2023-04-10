@@ -16,7 +16,7 @@ async function bootstrap() {
   }));
   app.use(cookieParser());
   initialize_session(app);
-  app.useStaticAssets(join(__dirname, '..', 'src', 'frontend', 'public'));
+  app.useStaticAssets(join(__dirname, '..', 'src', 'frontend', 'public'), {prefix: '/assets'});
   app.setBaseViewsDir(join(__dirname, '..', 'src', 'frontend', 'views'));
   app.setViewEngine("ejs");
 

@@ -13,10 +13,10 @@
           </div>
           <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" id="scrollposition">
             <div class="list-group list-group-flush border-bottom scrollarea">
-              <a v-for="(schedule, index) in showSchedules" href="#" class="list-group-item list-group-item-action py-3 lh-sm" @click.stop="addSchedule(index)">
-                <div class="col-10 mb-1 small">{{ convertDateToString(schedule) }}</div>
-                <strong class="mb-1"> {{ schedule.title }} </strong><br>
-                <div class="col-10 mb-1 small">{{ schedule.description }}</div>
+              <a v-for="(schedule, index) in showSchedules" href="#" class="list-group-item list-group-item-action py-3 lh-sm" @click.stop="addSchedule(index)" @mouseenter="scheduleMouseOver(index)" @mouseleave="scheduleMouseLeave(index)">
+                <div class="mb-1 fw-bold">{{ schedule.title }}</div>
+                <div class="mb-1 small">{{ convertDateToString(schedule) }}</div>
+                <div class="mb-1 small">{{ schedule.description }}</div>
               </a>
             </div>
           </div>
@@ -27,7 +27,7 @@
           <h5 class="mb-3">시간표</h5>
           <div id="scheduleSaver">
             <div v-for="(schedule, index) in assignSchedules" class="hoverSchedule" :style="getHoverStyles(schedule, index)" @click="delSchedule(index)">
-              {{ schedule.title }}
+              <a href="#" class="fill-div">{{ schedule.title }}</a>
             </div>
           </div>
           <table>
@@ -43,6 +43,22 @@
     </div>
   </main>
 
+  <div class="modal fade" id="addScheduleFailedModal" tabindex="-1" aria-labelledby="addScheduleFailedModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addScheduleFailedModalLabel">알림</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            스케줄 추가를 실패했습니다.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <footer class="pt-4 my-md-5 pt-md-5 border-top">
     <h6>안녕하세요, {{ userName }}. </h6>
   </footer>
