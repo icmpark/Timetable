@@ -5,7 +5,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { User } from '../../../user/domain/user';
 import { Schedule } from '../../domain/schedule';
 import { FindScheduleQuery } from '../../application/query/find-schedule.query';
-
+import { CheckAuthQuery } from '../../../auth/application/query/check-auth.query';
 export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
 
 @Injectable()
@@ -18,8 +18,8 @@ export class ScheduleGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const handler = context.getHandler();
-
-        if (!request.isAuthenticated())
+        const isAuth = await this.queryBus.execute(new CheckAuthQuery(request));
+        if (!isAuth)
             return false;
             
         const user: User = request.user;

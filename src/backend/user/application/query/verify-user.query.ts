@@ -1,8 +1,8 @@
 import { IQuery } from '@nestjs/cqrs';
 
-export class VerifyAuthQuery implements IQuery {
+export class VerifyUserQuery implements IQuery {
   constructor(
     readonly userId: string,
-    readonly password: string
+    readonly password: string,
   ) { }
 }

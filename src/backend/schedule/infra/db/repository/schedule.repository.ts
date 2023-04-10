@@ -26,7 +26,7 @@ export class ScheduleRepository implements IScheduleRepository {
         await this.dataSource.transaction<void>(async manager => {
             const scheduleEntity = new ScheduleEntity();
             scheduleEntity.id = id;
-            scheduleEntity.createdBy = createdBy;
+            scheduleEntity.createdUser = Promise.resolve({userId: createdBy} as UserEntity);
             scheduleEntity.title = title;
             scheduleEntity.description = description;
             scheduleEntity.startDate = startDate;
@@ -37,7 +37,11 @@ export class ScheduleRepository implements IScheduleRepository {
     }
     async update(id: string, title?: string, description?: string, addUser?: string, deleteUser?: string): Promise<void> {
         await this.dataSource.transaction<void>(async manager => {
-            const schedule = await manager.findOneBy(ScheduleEntity, {id: id});
+            const schedule = await manager.findOne(ScheduleEntity, {
+                relations: ['createdUser', 'assignedUser'],
+                where: {id: id},
+                select: {assignedUser: {userId: true}, createdUser: {userId: true}}
+            });
 
             if (title != undefined)
                 schedule.title = title;
@@ -85,9 +89,9 @@ export class ScheduleRepository implements IScheduleRepository {
     async findOne(id: string): Promise<Schedule | null> {
         const scheduleEntity: ScheduleEntity | null = await this.scheduleRepostory.findOne(
             {
-                relations: ['assignedUser'],
+                relations: ['assignedUser', 'createdUser'],
                 where: {id: id},
-                select: {assignedUser: {userId: true} }
+                select: {assignedUser: {userId: true}, createdUser: {userId: true} }
             }
         );
         
@@ -96,7 +100,7 @@ export class ScheduleRepository implements IScheduleRepository {
 
         return this.scheduleFactory.reconstitute(
             scheduleEntity.id,
-            scheduleEntity.createdBy,
+            (await scheduleEntity.createdUser).userId,
             scheduleEntity.title,
             scheduleEntity.description,
             scheduleEntity.startDate,
@@ -104,9 +108,9 @@ export class ScheduleRepository implements IScheduleRepository {
             (await scheduleEntity.assignedUser).map((user: UserEntity) => user.userId)
         );
     }
-    private convertEntityToObject = (scheduleEntity: ScheduleEntity): Schedule => this.scheduleFactory.reconstitute(
+    private convertEntityToObject = async (scheduleEntity: ScheduleEntity): Promise<Schedule> => this.scheduleFactory.reconstitute(
         scheduleEntity.id,
-        scheduleEntity.createdBy,
+        (await scheduleEntity.createdUser).userId,
         scheduleEntity.title,
         scheduleEntity.description,
         scheduleEntity.startDate,
@@ -114,20 +118,27 @@ export class ScheduleRepository implements IScheduleRepository {
     );
 
     async findAll(): Promise<Schedule[]> {
-        const scheduleEntities: ScheduleEntity[] = await this.scheduleRepostory.find();
-        return scheduleEntities.map(this.convertEntityToObject);
-
+        const scheduleEntities: ScheduleEntity[] = await this.scheduleRepostory.find({
+            relations: ['createdUser'],
+            select: { 'createdUser': { userId: true } }
+        });
+        return await Promise.all(scheduleEntities.map(this.convertEntityToObject));
     }
     async findCreatedBy(userId: string): Promise<Schedule[]> {
-        const scheduleEntities: ScheduleEntity[] = await this.scheduleRepostory.findBy({createdBy: userId});
-        return scheduleEntities.map(this.convertEntityToObject);
+        const scheduleEntities: ScheduleEntity[] = await this.scheduleRepostory.find({
+            relations: ['createdUser'],
+            where: { 'createdUser': { userId: userId } },
+            select: { 'createdUser': { userId: true } }
+        });
+        return await Promise.all(scheduleEntities.map(this.convertEntityToObject));
     }
     async findUserAssigned(userId: string): Promise<Schedule[]> {
         const scheduleEntities: ScheduleEntity[] = await this.scheduleRepostory.find({
-            relations: [ 'assignedUser' ],
-            where: { 'assignedUser': { userId: userId } }
+            relations: [ 'assignedUser', 'createdUser' ],
+            where: { 'assignedUser': { userId: userId } },
+            select: { 'createdUser': { userId: true } }
         })
-        return scheduleEntities.map(this.convertEntityToObject);
+        return await Promise.all(scheduleEntities.map(this.convertEntityToObject));
     }
 
 }

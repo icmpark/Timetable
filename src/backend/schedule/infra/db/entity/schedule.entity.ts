@@ -11,9 +11,6 @@ export class ScheduleEntity extends BaseEntity  {
 
     @Column({ length: 400 })
     description: string;
-    
-    @Column({ length: 60 })
-    createdBy: string;
 
     @Column('datetime')
     startDate: Date;
@@ -23,14 +20,13 @@ export class ScheduleEntity extends BaseEntity  {
 
     @ManyToOne(
         () => UserEntity,
-        { nullable: false, cascade: true, lazy: true}
+        { nullable: false, onDelete: 'CASCADE', lazy: true}
     )
-    @JoinColumn({ name: 'createdBy'})
     createdUser: Promise<UserEntity>;
     
     @ManyToMany(
         (type) => UserEntity,
-        { cascade: true, lazy: true }
+        { onDelete: 'CASCADE', lazy: true }
     )
     @JoinTable()
     assignedUser: Promise<UserEntity[]>;

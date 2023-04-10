@@ -54,6 +54,13 @@ export class UserRepository implements IUserRepository {
         await this.userRepository.delete({userId: userId});
     }
     
+    async verifyUser(userId: string, password: string): Promise<User | null> {
+        const user = await this.findByUserId(userId);
+        if (!user || !await bcrypt.compare(password, user.password))
+            return null;
+        return user;
+    }
+    
     async findByUserId(userId: string): Promise<User | null> {
         const userEntity: UserEntity | null = await this.userRepository.findOneBy({userId: userId});
 

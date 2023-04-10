@@ -12,6 +12,7 @@ import { UserUpdatedEventHandler } from './application/event/user-update.handler
 import { UserRepository } from './infra/db/repository/user.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './infra/db/entity/user.entity';
+import { VerifyUserQueryHandler } from './application/query/verify-user.handler';
 
 
 
@@ -22,7 +23,8 @@ const commandHandlers = [
 ];
 
 const queryHandlers = [
-  FindUserQueryHandler
+  FindUserQueryHandler,
+  VerifyUserQueryHandler
 ];
 
 const eventHandlers = [

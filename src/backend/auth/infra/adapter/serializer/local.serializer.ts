@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { PassportSerializer } from '@nestjs/passport';
-import { User } from '../../../user/domain/user';
-import { FindUserQuery } from '../../../user/application/query/user-find.query';
+import { User } from '../../../../user/domain/user';
+import { FindUserQuery } from '../../../../user/application/query/user-find.query';
 
 @Injectable()
 export class LocalSerializer extends PassportSerializer {
