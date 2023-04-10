@@ -17,11 +17,11 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label for="scheduleTitle" class="form-label">시작</label>
-                <input @input="isChanged" v-model="startDate" type="time" class="form-control" id="scheduleTitle" required>
+                <input @input="isChanged" min="08:00" max="24:00" v-model="startDate" type="time" class="form-control" id="scheduleTitle" required>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="scheduleTitle" class="form-label">끝</label>
-                <input @input="isChanged" v-model="endDate"  type="time" class="form-control" id="scheduleTitle" required>
+                <input @input="isChanged" min="08:00" max="24:00" v-model="endDate"  type="time" class="form-control" id="scheduleTitle" required>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="scheduleTitle" class="form-label">요일</label>

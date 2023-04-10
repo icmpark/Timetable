@@ -1,5 +1,6 @@
 const formNotFullFilled = '항목이 모두 입력되지 않았습니다.';
-const timeError = '시간을 잘못 입력하셨습니다.';
+const timeError = '스케줄의 끝 시간은 반드시 시작 시간보다 이후여야 합니다.';
+const timeRangeError = '입력한 시간 범위가 08:00 AM ~ 23:59 PM 이 아닙니다.';
 
 Vue.createApp({
     data() {
@@ -9,7 +10,7 @@ Vue.createApp({
             startDate: '',
             endDate: '',
             schedules: [],
-            dow: '',
+            dow: '0',
             userId: '',
             userName: '',
             availDesc: formNotFullFilled,
@@ -130,15 +131,25 @@ Vue.createApp({
             const dow = Number(this.dow);
             const days = 25 + dow;
 
+            const minDate = new Date(`1999-10-${days} 08:00:00+09:00`);
+            const maxDate = new Date(`1999-10-${days+1} 00:00:00+09:00`);
+
             const body = {
                 title: this.title,
                 description: this.description,
                 startDate: `1999-10-${days} ${this.startDate}:00+09:00`,
                 endDate: `1999-10-${days} ${this.endDate}:00+09:00`,
             }
+            const startDate = new Date(body.startDate);
+            const endDate = new Date(body.endDate);
+    
+            if (startDate >= endDate) {
+                this.availDesc = timeError;
+                return null;
+            }
 
-            if (new Date(body.startDate) >= new Date(body.endDate)) {
-                this.availDesc = timeError
+            if (startDate < minDate || endDate < minDate || maxDate <= endDate || maxDate <= startDate) {
+                this.availDesc = timeRangeError;
                 return null;
             }
 
