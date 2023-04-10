@@ -13,15 +13,21 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
       - --default-authentication-plugin=mysql_native_password
-    ports:
-      - "3306:3306"
   redis:
     image: redis
     restart: always
-    ports:
-      - "6379:6379"
     volumes:
       - redis_data:/data
+  filesharing:
+    depends_on:
+      - mysql
+      - redis
+    ports:
+      - 3000:3000
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: always
 volumes:
   db_data:
   redis_data:

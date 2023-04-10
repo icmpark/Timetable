@@ -4,7 +4,7 @@ export default registerAs('database', () => ({
   service: 'database',
   mysql: {
     type: 'mysql',
-    host: 'localhost',
+    host: 'mysql',
     port: 3306,
     username: 'dbuser',
     password: 'dbuser1234',
@@ -13,7 +13,7 @@ export default registerAs('database', () => ({
     autoLoadEntities: true
   },
   redis: {
-    addr: 'localhost',
+    addr: 'redis',
     port: '6379',
     TTL: 60 * 60
   }

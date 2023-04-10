@@ -1,9 +1,12 @@
+
 FROM alpine
 RUN apk update
-RUN apk add --no-cache chromium  
-RUN apk add --no-cache chromium-chromedriver
-RUN apk add --no-cache python3 python3-dev py3-pip nano 
-RUN apk add --no-cache gcc musl-dev libffi-dev
-RUN pip3 install flask pymysql flask-login flask-security cryptography mysql-connector-python selenium
-WORKDIR /src/
-ENTRYPOINT ["flask",  "run"] 
+RUN apk add --no-cache nodejs yarn 
+RUN apk add --no-cache curl
+RUN apk add --no-cache build-base vips-dev
+COPY package.json /usr/src/app/package.json
+WORKDIR /usr/src/app
+RUN yarn global add node-gyp
+RUN yarn install
+COPY . /usr/src/app
+ENTRYPOINT [ "yarn", "start"]
