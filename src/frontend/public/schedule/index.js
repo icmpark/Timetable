@@ -129,10 +129,10 @@ Vue.createApp({
 
             if (col == 1)
             {
-                if (row < 5)
+                if (row < 6)
                     return `AM ${String(row + 6).padStart(2, '0')}`;
                 else
-                    return `PM ${String((row == 5) ? (row + 7) : (row - 5)).padStart(2, '0')}`;
+                    return `PM ${String((row == 6) ? (row + 6) : (row - 6)).padStart(2, '0')}`;
             }
                 
             return '';
@@ -141,7 +141,7 @@ Vue.createApp({
             function convertDate (date) { 
                 date = new Date(date);
                 date = date.toLocaleString('en-US', { timeZone: 'Asia/Seoul' , hour: '2-digit', minute: '2-digit', hour12: false});
-                return Number(date.substr(0, 2) - 8) * 60 + Number(date.substr(3, 2));
+                return Number(date.substr(0, 2) - 7) * 60 + Number(date.substr(3, 2));
             };
             function convertDay (date) { 
                 date = new Date(date);
